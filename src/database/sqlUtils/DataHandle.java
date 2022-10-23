@@ -12,7 +12,10 @@ public class DataHandle {
         String[] dataSplit = data.split(",");
         //获取表的结构的value
         ArrayList<String> tableStructureValue = new ArrayList<>();
+        //获取表的结构的key
+        ArrayList<String> tableStructureKey = new ArrayList<>();
         for (String key : tableStructure.keySet()) {
+            tableStructureKey.add(key);
             tableStructureValue.add(tableStructure.get(key));
         }
         //将数据根据key的类型转换为对应的类型
@@ -23,9 +26,18 @@ public class DataHandle {
                 case "INT":
                     dataToSql.add(Integer.parseInt(dataSplit[i]));
                     break;
-                case "VARCHAR":
-                    dataToSql.add(dataSplit[i].trim());
+                case "VARCHAR":{
+                    //学生名字去除空格
+                    if(dataSplit[i].contains(" ") && tableStructureKey.get(i).equals("name")){
+                        System.out.println(dataSplit[i]+" 数据中含有空格，转为 "+dataSplit[i].replace(" ",""));
+                        dataToSql.add(dataSplit[i].replace(" ",""));
+                    }
+                    else {
+                        dataToSql.add(dataSplit[i]);
+                    }
                     break;
+                }
+
                 case "DOUBLE":
                     dataToSql.add(Double.parseDouble(dataSplit[i]));
                     break;

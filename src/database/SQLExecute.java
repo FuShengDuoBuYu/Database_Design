@@ -33,7 +33,6 @@ public class SQLExecute {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(insertSql);
             for (int i = 1; i < insertData.size(); i++) {
-
                 ArrayList<Object> dataToSql = DataHandle.stringToSql(insertData.get(i),tableStructure);
                 for (int j = 0; j < dataToSql.size(); j++) {
                     preparedStatement.setObject(j+1,dataToSql.get(j));
